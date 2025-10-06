@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +26,7 @@ export default function LoginPage() {
     <form onSubmit={handleSubmit}>
       <div>
         <h2>Login</h2>
-        <p>🔒 Akses data hanya tersedia untuk pengguna terdaftar.</p>
+        <p>🔒 Akses data hanya tersedia untuk pengguna terdaftar. Silahkan Login</p>
       </div>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -39,13 +40,27 @@ export default function LoginPage() {
           placeholder="Alamat email"
         />
 
-        <input
+        {/* <input
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           type="password"
           required
           placeholder="Kata sandi"
+        /> */}
+
+        <input
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          type={showPassword ? "text" : "password"}
+          required
+          placeholder="Kata sandi"
         />
+        <button
+          type="button"
+          onClick={() => setShowPassword((prev) => !prev)}
+        >
+          {showPassword ? "🙈 Sembunyikan" : "👁️ Tampilkan"}
+        </button>
       </div>
 
       <button type="submit">
