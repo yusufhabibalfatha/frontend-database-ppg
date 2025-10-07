@@ -1,19 +1,43 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import ButtonLogout from "./components/ButtonLogout";
 import PrivateRoute from "./context/PrivateRoute";
+import "./Layout.css"; // ✅ Import CSS
 
 function Layout() {
+  const location = useLocation();
+
   return (
-    <div>
-      <nav>
+    <div className="layout-container">
+      <nav className="layout-nav">
         <PrivateRoute>
-          <Link to="/">Home</Link> |{" "}
-          <Link to="/tambah">Tambah Generus</Link>
-          <ButtonLogout />
+          <div className="nav-content">
+            <div className="nav-links">
+              <Link 
+                to="/" 
+                className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+              >
+                🏠 Home
+              </Link>
+              <span className="nav-separator">|</span>
+              <Link 
+                to="/tambah" 
+                className={`nav-link ${location.pathname === '/tambah' ? 'active' : ''}`}
+              >
+                ➕ Tambah Generus
+              </Link>
+            </div>
+            <div className="nav-right">
+              <ButtonLogout />
+            </div>
+          </div>
         </PrivateRoute>
       </nav>
-      <hr />
-      <Outlet />
+      
+      <hr className="layout-divider" />
+      
+      <main className="layout-outlet">
+        <Outlet />
+      </main>
     </div>
   );
 }

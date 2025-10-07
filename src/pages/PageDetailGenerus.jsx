@@ -25,6 +25,7 @@ function PageDetailGenerus() {
         },
       });
         setGenerus(response.data.data);
+        console.log('data ', response.data.data)
         // showNotification("Berhasil mengambil detail generus.");
       } catch (error) {
         console.error(error);

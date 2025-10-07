@@ -1,20 +1,21 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import "./ButtonLogout.css"; // Import CSS
 
-const ButtonLogout = () => {
+function ButtonLogout() {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const goToLogout = () => {
+
+  const handleLogout = () => {
     logout();
-    navigate("login");
+    navigate("/login");
   };
+
   return (
-    <div className="bg-blue-300 h-16 w-32 flex justify-center items-center border-l-4 border-black hover:bg-blue-400">
-      <button className="text-sm font-bold" onClick={goToLogout}>
-        Logout
-      </button>
-    </div>
+    <button onClick={handleLogout} className="logout-btn">
+      🚪 Logout
+    </button>
   );
-};
+}
 
 export default ButtonLogout;
