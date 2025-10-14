@@ -29,11 +29,14 @@ function FormTambahGenerus() {
       golongan_darah: "",
       jumlah_saudara: "",
       anak_ke_berapa: "",
+      riwayat_penyakit: "",
       orangtua: {
         nama_ayah: "",
         nama_ibu: "",
         pekerjaan_ayah: "",
+        pendidikan_terakhir_ayah: "",
         pekerjaan_ibu: "",
+        pendidikan_terakhir_ibu: "",
         keahlian: "",
         no_hp: "",
       },
@@ -50,10 +53,12 @@ function FormTambahGenerus() {
       },
       no_hp: [""],
       hobi: [""],
+      minat: [""],
       cita_cita: [""],
       prestasi: [""],
       kejuaraan: [""],
       jenjang_pendidikan: "",
+      nama_sekolah: "",
       jenjang_pembinaan: "",
     };
 
@@ -102,7 +107,6 @@ function FormTambahGenerus() {
     }/db/generus/tambah?_=${new Date().getTime()}`;
 
     const token = localStorage.getItem("adminToken");
-
     try {
       const response = await axios.post(apiUrl, data, {
         headers: {
@@ -272,6 +276,19 @@ function FormTambahGenerus() {
                 onChange={handleChange}
               />
             </div>
+            <div className="form-group">
+              <label htmlFor="riwayat_penyakit" className="form-label">
+                Riwayat penyakit
+              </label>
+              <input
+                type="text"
+                id="riwayat_penyakit"
+                name="riwayat_penyakit"
+                className="form-input"
+                placeholder="Riwayat penyakit"
+                onChange={handleChange}
+              />
+            </div>
           </div>
         </div>
 
@@ -365,6 +382,19 @@ function FormTambahGenerus() {
           <h2 className="section-title">🎓 Pendidikan & Pembinaan</h2>
           <div className="form-grid">
             <FormInputPendidikan form={form} setForm={setForm} />
+            <div className="form-group">
+              <label htmlFor="nama_sekolah" className="form-label">
+                Nama Sekolah
+              </label>
+              <input
+                type="text"
+                id="nama_sekolah"
+                name="nama_sekolah"
+                className="form-input"
+                placeholder="Nama Sekolah"
+                onChange={handleChange}
+              />
+            </div>
             <FormInputPembinaan form={form} setForm={setForm} />
           </div>
         </div>
@@ -373,7 +403,7 @@ function FormTambahGenerus() {
         <div className="form-section">
           <h2 className="section-title">⭐ Data Tambahan</h2>
           <div className="form-grid">
-            {["hobi", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
+            {["hobi", "minat", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
               <div key={key} className="form-group">
                 <label className="form-label">
                   {formatLabel(key)}

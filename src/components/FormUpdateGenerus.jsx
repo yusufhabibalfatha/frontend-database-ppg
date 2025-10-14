@@ -28,11 +28,14 @@ function FormUpdateGenerus() {
     golongan_darah: "",
     jumlah_saudara: "",
     anak_ke_berapa: "",
+    riwayat_penyakit: "",
     orangtua: {
       nama_ayah: "",
       nama_ibu: "",
       pekerjaan_ayah: "",
+      pendidikan_terakhir_ayah: "",
       pekerjaan_ibu: "",
+      pendidikan_terakhir_ibu: "",
       keahlian: "",
       no_hp: "",
     },
@@ -48,11 +51,13 @@ function FormUpdateGenerus() {
       desa: "",
     },
     no_hp: [""],
+    minat: [""],
     hobi: [""],
     cita_cita: [""],
     prestasi: [""],
     kejuaraan: [""],
     jenjang_pendidikan: "",
+    nama_sekolah: "",
     jenjang_pembinaan: "",
   });
 
@@ -141,6 +146,7 @@ function FormUpdateGenerus() {
           golongan_darah: response.data.data.golongan_darah || "",
           jumlah_saudara: response.data.data.jumlah_saudara || "",
           anak_ke_berapa: response.data.data.anak_ke_berapa || "",
+          riwayat_penyakit: response.data.data.riwayat_penyakit || "",
           alamat: {
             jalan: response.data.data?.jalan || "",
             rt: response.data.data?.rt || "",
@@ -156,16 +162,20 @@ function FormUpdateGenerus() {
             nama_ayah: response.data.data?.nama_ayah || "",
             nama_ibu: response.data.data?.nama_ibu || "",
             pekerjaan_ayah: response.data.data?.pekerjaan_ayah || "",
+            pendidikan_terakhir_ayah: response.data.data?.pendidikan_terakhir_ayah || "",
             pekerjaan_ibu: response.data.data?.pekerjaan_ibu || "",
+            pendidikan_terakhir_ibu: response.data.data?.pendidikan_terakhir_ibu || "",
             keahlian: response.data.data?.keahlian || "",
             no_hp: response.data.data?.no_hp || "",
           },
           no_hp: response.data.data.no_hp || [""],
           hobi: response.data.data.hobi || [""],
+          minat: response.data.data.minat || [""],
           cita_cita: response.data.data.cita_cita || [""],
           prestasi: response.data.data.prestasi || [""],
           kejuaraan: response.data.data.kejuaraan || [""],
           jenjang_pendidikan: response.data.data.jenjang_pendidikan || "",
+          nama_sekolah: response.data.data.nama_sekolah || "",
           jenjang_pembinaan: response.data.data.jenjang_pembinaan || "",
         });
       } catch (error) {
@@ -339,6 +349,19 @@ function FormUpdateGenerus() {
                 value={form.anak_ke_berapa}
               />
             </div>
+            <div className="form-group">
+              <label htmlFor="riwayat_penyakit" className="form-label">
+                Anak Ke-berapa
+              </label>
+              <input
+                type="text"
+                id="riwayat_penyakit"
+                name="riwayat_penyakit"
+                className="form-input"
+                onChange={handleChange}
+                value={form.riwayat_penyakit}
+              />
+            </div>
           </div>
         </div>
 
@@ -472,6 +495,20 @@ function FormUpdateGenerus() {
               />
             </div>
             <div className="form-group">
+              <label htmlFor="nama_sekolah" className="form-label">
+                Nama Sekolah
+              </label>
+              <input
+                type="text"
+                id="nama_sekolah"
+                name="nama_sekolah"
+                className="form-input"
+                placeholder="Nama sekolah"
+                onChange={handleChange}
+                value={form.nama_sekolah}
+              />
+            </div>
+            <div className="form-group">
               <label htmlFor="jenjang_pembinaan" className="form-label">
                 Jenjang Pembinaan
               </label>
@@ -492,7 +529,7 @@ function FormUpdateGenerus() {
         <div className="form-section">
           <h2 className="section-title">⭐ Data Tambahan</h2>
           <div className="form-grid">
-            {["hobi", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
+            {["hobi", "minat", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
               <div key={key} className="form-group">
                 <label className="form-label">
                   {formatLabel(key)}
