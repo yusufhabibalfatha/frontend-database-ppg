@@ -169,7 +169,7 @@ function FormTambahGenerus() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="nama_panggilan" className="form-label">
+              <label htmlFor="nama_panggilan" className="form-label required">
                 Nama Panggilan
               </label>
               <input
@@ -179,6 +179,7 @@ function FormTambahGenerus() {
                 className="form-input"
                 placeholder="Masukkan nama panggilan"
                 onChange={handleChange}
+                required
               />
             </div>
 
@@ -229,7 +230,7 @@ function FormTambahGenerus() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="golongan_darah" className="form-label">
+              <label htmlFor="golongan_darah" className="form-label required">
                 Golongan Darah
               </label>
               <select
@@ -238,6 +239,7 @@ function FormTambahGenerus() {
                 className="form-select"
                 value={form.golongan_darah || ""}
                 onChange={handleChange}
+                required
               >
                 <option value="">Pilih Golongan Darah</option>
                 <option value="A">A</option>
@@ -248,7 +250,7 @@ function FormTambahGenerus() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="jumlah_saudara" className="form-label">
+              <label htmlFor="jumlah_saudara" className="form-label required">
                 Jumlah Saudara
               </label>
               <input
@@ -259,11 +261,12 @@ function FormTambahGenerus() {
                 min={0}
                 placeholder="0"
                 onChange={handleChange}
+                required
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="anak_ke_berapa" className="form-label">
+              <label htmlFor="anak_ke_berapa" className="form-label required">
                 Anak Ke-berapa
               </label>
               <input
@@ -274,10 +277,12 @@ function FormTambahGenerus() {
                 min={0}
                 placeholder="0"
                 onChange={handleChange}
+                required
               />
             </div>
+
             <div className="form-group">
-              <label htmlFor="riwayat_penyakit" className="form-label">
+              <label htmlFor="riwayat_penyakit" className="form-label required">
                 Riwayat penyakit
               </label>
               <input
@@ -287,6 +292,7 @@ function FormTambahGenerus() {
                 className="form-input"
                 placeholder="Riwayat penyakit"
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -298,7 +304,7 @@ function FormTambahGenerus() {
           <div className="nested-grid">
             {Object.keys(form.alamat).map((field) => (
               <div key={field} className="form-group">
-                <label htmlFor={field} className="form-label">
+                <label htmlFor={field} className="form-label required">
                   {formatLabel(field)}
                 </label>
                 <input
@@ -307,6 +313,7 @@ function FormTambahGenerus() {
                   className="form-input"
                   placeholder={`Masukkan ${formatLabel(field).toLowerCase()}`}
                   onChange={(e) => handleNestedChange(e, "alamat")}
+                  required
                 />
               </div>
             ))}
@@ -319,7 +326,7 @@ function FormTambahGenerus() {
           <FormInputAlamatSambung form={form} setForm={setForm} />
           
           <div className="form-group">
-            <label className="form-label">📱 Nomor HP</label>
+            <label className="form-label required">📱 Nomor HP</label>
             {form.no_hp.map((item, idx) => (
               <div key={idx} className="array-item">
                 <input
@@ -333,6 +340,7 @@ function FormTambahGenerus() {
                     const numericValue = e.target.value.replace(/\D/g, "");
                     handleArrayChange(idx, "no_hp", numericValue);
                   }}
+                  required
                 />
                 {form.no_hp.length > 1 && (
                   <button
@@ -361,7 +369,7 @@ function FormTambahGenerus() {
           <div className="form-grid">
             {form.orangtua && Object.keys(form.orangtua).map((field) => (
               <div key={field} className="form-group">
-                <label htmlFor={field} className="form-label">
+                <label htmlFor={field} className="form-label required">
                   {formatLabel(field)}
                 </label>
                 <input
@@ -371,6 +379,7 @@ function FormTambahGenerus() {
                   placeholder={`Masukkan ${formatLabel(field).toLowerCase()}`}
                   value={form.orangtua[field]}
                   onChange={(e) => handleNestedChange(e, "orangtua")}
+                  required
                 />
               </div>
             ))}
@@ -383,7 +392,7 @@ function FormTambahGenerus() {
           <div className="form-grid">
             <FormInputPendidikan form={form} setForm={setForm} />
             <div className="form-group">
-              <label htmlFor="nama_sekolah" className="form-label">
+              <label htmlFor="nama_sekolah" className="form-label required">
                 Nama Sekolah
               </label>
               <input
@@ -393,6 +402,7 @@ function FormTambahGenerus() {
                 className="form-input"
                 placeholder="Nama Sekolah"
                 onChange={handleChange}
+                required
               />
             </div>
             <FormInputPembinaan form={form} setForm={setForm} />
@@ -405,7 +415,7 @@ function FormTambahGenerus() {
           <div className="form-grid">
             {["hobi", "minat", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
               <div key={key} className="form-group">
-                <label className="form-label">
+                <label className="form-label required">
                   {formatLabel(key)}
                 </label>
                 {form[key].map((item, idx) => (
@@ -417,6 +427,7 @@ function FormTambahGenerus() {
                       onChange={(e) =>
                         handleArrayChange(idx, key, e.target.value)
                       }
+                      required
                     />
                     {form[key].length > 1 && (
                       <button

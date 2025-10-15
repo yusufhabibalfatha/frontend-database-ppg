@@ -54,7 +54,7 @@ const FormInputPendidikan = ({ form, setForm }) => {
 
   return (
     <div>
-      <label htmlFor="jenjang_pendidikan" className="text-xs">
+      <label htmlFor="jenjang_pendidikan" className="text-xs required">
         Jenjang pendidikan :
       </label>
       <select
@@ -67,6 +67,7 @@ const FormInputPendidikan = ({ form, setForm }) => {
         }
         onChange={handlePendidikanChange}
         className="w-full border-black border-4 shadow-[4px_4px_0px_0px_#000000] bg-indigo-300 font-bold px-2 py-4"
+        required
       >
         <option value="">Pilih Jenjang Pendidikan</option>
         {jenjangPendidikanList.map((jenjang) => (
@@ -82,7 +83,8 @@ const FormInputPendidikan = ({ form, setForm }) => {
           placeholder="Masukkan jurusan"
           value={jurusan}
           onChange={handleJurusanChange}
-          className="w-full border-black border-4 shadow-[4px_4px_0px_0px_#000000] bg-indigo-300 font-bold px-2 py-4"
+          className="w-full border-black border-4 shadow-[4px_4px_0px_0px_#000000] bg-indigo-300 font-bold px-2 py-4 mt-2"
+          required
         />
       )}
     </div>

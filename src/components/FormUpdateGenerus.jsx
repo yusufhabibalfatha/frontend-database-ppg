@@ -236,7 +236,7 @@ function FormUpdateGenerus() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="nama_panggilan" className="form-label">
+              <label htmlFor="nama_panggilan" className="form-label required">
                 Nama Panggilan
               </label>
               <input
@@ -247,6 +247,7 @@ function FormUpdateGenerus() {
                 placeholder="Masukkan nama panggilan"
                 onChange={handleChange}
                 value={form.nama_panggilan}
+                required
               />
             </div>
 
@@ -300,7 +301,7 @@ function FormUpdateGenerus() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="golongan_darah" className="form-label">
+              <label htmlFor="golongan_darah" className="form-label required">
                 Golongan Darah
               </label>
               <select
@@ -309,6 +310,7 @@ function FormUpdateGenerus() {
                 className="form-select"
                 value={form.golongan_darah || ""}
                 onChange={handleChange}
+                required
               >
                 <option value="">Pilih Golongan Darah</option>
                 <option value="A">A</option>
@@ -319,7 +321,7 @@ function FormUpdateGenerus() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="jumlah_saudara" className="form-label">
+              <label htmlFor="jumlah_saudara" className="form-label required">
                 Jumlah Saudara
               </label>
               <input
@@ -331,11 +333,12 @@ function FormUpdateGenerus() {
                 placeholder="0"
                 onChange={handleChange}
                 value={form.jumlah_saudara}
+                required
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="anak_ke_berapa" className="form-label">
+              <label htmlFor="anak_ke_berapa" className="form-label required">
                 Anak Ke-berapa
               </label>
               <input
@@ -347,19 +350,23 @@ function FormUpdateGenerus() {
                 placeholder="0"
                 onChange={handleChange}
                 value={form.anak_ke_berapa}
+                required
               />
             </div>
+
             <div className="form-group">
-              <label htmlFor="riwayat_penyakit" className="form-label">
-                Anak Ke-berapa
+              <label htmlFor="riwayat_penyakit" className="form-label required">
+                Riwayat Penyakit
               </label>
               <input
                 type="text"
                 id="riwayat_penyakit"
                 name="riwayat_penyakit"
                 className="form-input"
+                placeholder="Riwayat penyakit"
                 onChange={handleChange}
                 value={form.riwayat_penyakit}
+                required
               />
             </div>
           </div>
@@ -371,7 +378,7 @@ function FormUpdateGenerus() {
           <div className="nested-grid">
             {Object.keys(form.alamat).map((field) => (
               <div key={field} className="form-group">
-                <label htmlFor={field} className="form-label">
+                <label htmlFor={field} className="form-label required">
                   {formatLabel(field)}
                 </label>
                 <input
@@ -381,6 +388,7 @@ function FormUpdateGenerus() {
                   placeholder={`Masukkan ${formatLabel(field).toLowerCase()}`}
                   value={form.alamat[field] || ""}
                   onChange={(e) => handleNestedChange(e, "alamat")}
+                  required
                 />
               </div>
             ))}
@@ -400,7 +408,7 @@ function FormUpdateGenerus() {
           <div className="form-grid">
             {Object.keys(form.alamat_sambung).map((field) => (
               <div key={field} className="form-group">
-                <label htmlFor={field} className="form-label">
+                <label htmlFor={field} className="form-label required">
                   {formatLabel(field)}
                   {!isAdmin && " 🔒"}
                 </label>
@@ -412,13 +420,14 @@ function FormUpdateGenerus() {
                   value={form.alamat_sambung[field] || ""}
                   onChange={(e) => handleNestedChange(e, "alamat_sambung")}
                   readOnly={!isAdmin}
+                  required
                 />
               </div>
             ))}
           </div>
 
           <div className="form-group">
-            <label className="form-label">📱 Nomor HP</label>
+            <label className="form-label required">📱 Nomor HP</label>
             {form.no_hp.map((item, idx) => (
               <div key={idx} className="array-item">
                 <input
@@ -432,6 +441,7 @@ function FormUpdateGenerus() {
                     const numericValue = e.target.value.replace(/\D/g, "");
                     handleArrayChange(idx, "no_hp", numericValue);
                   }}
+                  required
                 />
                 {form.no_hp.length > 1 && (
                   <button
@@ -460,7 +470,7 @@ function FormUpdateGenerus() {
           <div className="form-grid">
             {form.orangtua && Object.keys(form.orangtua).map((field) => (
               <div key={field} className="form-group">
-                <label htmlFor={field} className="form-label">
+                <label htmlFor={field} className="form-label required">
                   {formatLabel(field)}
                 </label>
                 <input
@@ -470,6 +480,7 @@ function FormUpdateGenerus() {
                   placeholder={`Masukkan ${formatLabel(field).toLowerCase()}`}
                   value={form.orangtua[field] || ""}
                   onChange={(e) => handleNestedChange(e, "orangtua")}
+                  required
                 />
               </div>
             ))}
@@ -481,7 +492,7 @@ function FormUpdateGenerus() {
           <h2 className="section-title">🎓 Pendidikan & Pembinaan</h2>
           <div className="form-grid">
             <div className="form-group">
-              <label htmlFor="jenjang_pendidikan" className="form-label">
+              <label htmlFor="jenjang_pendidikan" className="form-label required">
                 Jenjang Pendidikan
               </label>
               <input
@@ -492,10 +503,11 @@ function FormUpdateGenerus() {
                 placeholder="Jenjang pendidikan"
                 onChange={handleChange}
                 value={form.jenjang_pendidikan}
+                required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="nama_sekolah" className="form-label">
+              <label htmlFor="nama_sekolah" className="form-label required">
                 Nama Sekolah
               </label>
               <input
@@ -506,10 +518,11 @@ function FormUpdateGenerus() {
                 placeholder="Nama sekolah"
                 onChange={handleChange}
                 value={form.nama_sekolah}
+                required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="jenjang_pembinaan" className="form-label">
+              <label htmlFor="jenjang_pembinaan" className="form-label required">
                 Jenjang Pembinaan
               </label>
               <input
@@ -520,6 +533,7 @@ function FormUpdateGenerus() {
                 placeholder="Jenjang pembinaan"
                 onChange={handleChange}
                 value={form.jenjang_pembinaan}
+                required
               />
             </div>
           </div>
@@ -531,7 +545,7 @@ function FormUpdateGenerus() {
           <div className="form-grid">
             {["hobi", "minat", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
               <div key={key} className="form-group">
-                <label className="form-label">
+                <label className="form-label required">
                   {formatLabel(key)}
                 </label>
                 {form[key].map((item, idx) => (
@@ -544,6 +558,7 @@ function FormUpdateGenerus() {
                       onChange={(e) =>
                         handleArrayChange(idx, key, e.target.value)
                       }
+                      required
                     />
                     {form[key].length > 1 && (
                       <button
