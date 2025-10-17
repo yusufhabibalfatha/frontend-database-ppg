@@ -246,6 +246,7 @@ function FormTambahGenerus() {
                 <option value="B">B</option>
                 <option value="AB">AB</option>
                 <option value="O">O</option>
+                <option value="Tidak Tau">Tidak Tau</option>
               </select>
             </div>
 
@@ -393,14 +394,14 @@ function FormTambahGenerus() {
             <FormInputPendidikan form={form} setForm={setForm} />
             <div className="form-group">
               <label htmlFor="nama_sekolah" className="form-label required">
-                Nama Sekolah
+                Nama Sekolah/Universitas
               </label>
               <input
                 type="text"
                 id="nama_sekolah"
                 name="nama_sekolah"
                 className="form-input"
-                placeholder="Nama Sekolah"
+                placeholder="Nama Sekolah/Universitas"
                 onChange={handleChange}
                 required
               />

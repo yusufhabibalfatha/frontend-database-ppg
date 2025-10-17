@@ -317,6 +317,7 @@ function FormUpdateGenerus() {
                 <option value="B">B</option>
                 <option value="AB">AB</option>
                 <option value="O">O</option>
+                <option value="Tidak Tau">Tidak Tau</option>
               </select>
             </div>
 
