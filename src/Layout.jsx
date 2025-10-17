@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
 import ButtonLogout from "./components/ButtonLogout";
+import WhatsAppButton from "./components/WhatsAppButton"
 import PrivateRoute from "./context/PrivateRoute";
 import "./Layout.css"; // ✅ Import CSS
 
@@ -38,6 +39,7 @@ function Layout() {
       <main className="layout-outlet">
         <Outlet />
       </main>
+      <WhatsAppButton phoneNumber="6287865712625" />
     </div>
   );
 }
