@@ -106,6 +106,9 @@ function FormTambahGenerus() {
       import.meta.env.VITE_API_URL
     }/db/generus/tambah?_=${new Date().getTime()}`;
 
+      console.log('data kirim , ', data)
+
+
     const token = localStorage.getItem("adminToken");
     try {
       const response = await axios.post(apiUrl, data, {
@@ -114,7 +117,8 @@ function FormTambahGenerus() {
         },
       });
       showNotification("✅ Data generus berhasil ditambahkan!");
-      navigate("/");
+      console.log('data dari backend, ', response)
+      // navigate("/");
     } catch (error) {
       showNotification("❌ Gagal menambahkan data generus.");
       console.error(error);
