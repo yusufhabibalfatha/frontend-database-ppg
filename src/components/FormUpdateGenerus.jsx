@@ -2,11 +2,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import FormInputAlamatSambung from "./FormInputAlamatSambung";
 import FormInputPembinaan from "./FormInputPembinaan";
-import axios from "axios";
 import FormInputPendidikan from "./FormInputPendidikan";
+import axios from "axios";
 import { NotificationContext } from "../context/NotificationContext";
 import { useAuth } from "../context/AuthContext";
-import "./FormUpdateGenerus.css"; // ✅ Import CSS
+import "./FormUpdateGenerus.css";
 
 function FormUpdateGenerus() {
   const { id } = useParams();
@@ -217,7 +217,9 @@ function FormUpdateGenerus() {
       <form onSubmit={handleSubmit} className="form-container">
         {/* Data Diri */}
         <div className="form-section">
-          <h2 className="section-title">👤 Data Diri</h2>
+          <div className="section-header">
+            <h2 className="section-title">👤 Data Diri</h2>
+          </div>
           <div className="form-grid">
             <div className="form-group">
               <label htmlFor="nama_lengkap" className="form-label required">
@@ -375,7 +377,9 @@ function FormUpdateGenerus() {
 
         {/* Data Alamat */}
         <div className="form-section">
-          <h2 className="section-title">🏠 Data Alamat</h2>
+          <div className="section-header">
+            <h2 className="section-title">🏠 Data Alamat</h2>
+          </div>
           <div className="nested-grid">
             {Object.keys(form.alamat).map((field) => (
               <div key={field} className="form-group">
@@ -398,7 +402,9 @@ function FormUpdateGenerus() {
 
         {/* Alamat Sambung & No HP */}
         <div className="form-section">
-          <h2 className="section-title">📍 Alamat Sambung & Kontak</h2>
+          <div className="section-header">
+            <h2 className="section-title">📍 Alamat Sambung & Kontak</h2>
+          </div>
           
           {!isAdmin && (
             <div className="read-only-info">
@@ -406,26 +412,7 @@ function FormUpdateGenerus() {
             </div>
           )}
           
-          <div className="form-grid">
-            {Object.keys(form.alamat_sambung).map((field) => (
-              <div key={field} className="form-group">
-                <label htmlFor={field} className="form-label required">
-                  {formatLabel(field)}
-                  {!isAdmin && " 🔒"}
-                </label>
-                <input
-                  id={field}
-                  name={field}
-                  className="form-input"
-                  placeholder={`Masukkan ${formatLabel(field).toLowerCase()}`}
-                  value={form.alamat_sambung[field] || ""}
-                  onChange={(e) => handleNestedChange(e, "alamat_sambung")}
-                  readOnly={!isAdmin}
-                  required
-                />
-              </div>
-            ))}
-          </div>
+          <FormInputAlamatSambung form={form} setForm={setForm} />
 
           <div className="form-group">
             <label className="form-label required">📱 Nomor HP</label>
@@ -447,7 +434,7 @@ function FormUpdateGenerus() {
                 {form.no_hp.length > 1 && (
                   <button
                     type="button"
-                    className="btn btn-secondary btn-sm"
+                    className="remove-field-btn"
                     onClick={() => removeField("no_hp", idx)}
                   >
                     ❌
@@ -467,7 +454,9 @@ function FormUpdateGenerus() {
 
         {/* Data Orang Tua */}
         <div className="form-section">
-          <h2 className="section-title">👨‍👩‍👧‍👦 Data Orang Tua</h2>
+          <div className="section-header">
+            <h2 className="section-title">👨‍👩‍👧‍👦 Data Orang Tua</h2>
+          </div>
           <div className="form-grid">
             {form.orangtua && Object.keys(form.orangtua).map((field) => (
               <div key={field} className="form-group">
@@ -490,59 +479,35 @@ function FormUpdateGenerus() {
 
         {/* Pendidikan & Pembinaan */}
         <div className="form-section">
-          <h2 className="section-title">🎓 Pendidikan & Pembinaan</h2>
+          <div className="section-header">
+            <h2 className="section-title">🎓 Pendidikan & Pembinaan</h2>
+          </div>
           <div className="form-grid">
-            <div className="form-group">
-              <label htmlFor="jenjang_pendidikan" className="form-label required">
-                Jenjang Pendidikan
-              </label>
-              <input
-                type="text"
-                id="jenjang_pendidikan"
-                name="jenjang_pendidikan"
-                className="form-input"
-                placeholder="Jenjang pendidikan"
-                onChange={handleChange}
-                value={form.jenjang_pendidikan}
-                required
-              />
-            </div>
+            <FormInputPendidikan form={form} setForm={setForm} />
             <div className="form-group">
               <label htmlFor="nama_sekolah" className="form-label required">
-                Nama Sekolah
+                Nama Sekolah/Universitas
               </label>
               <input
                 type="text"
                 id="nama_sekolah"
                 name="nama_sekolah"
                 className="form-input"
-                placeholder="Nama sekolah"
+                placeholder="Nama Sekolah/Universitas"
                 onChange={handleChange}
                 value={form.nama_sekolah}
                 required
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="jenjang_pembinaan" className="form-label required">
-                Jenjang Pembinaan
-              </label>
-              <input
-                type="text"
-                id="jenjang_pembinaan"
-                name="jenjang_pembinaan"
-                className="form-input"
-                placeholder="Jenjang pembinaan"
-                onChange={handleChange}
-                value={form.jenjang_pembinaan}
-                required
-              />
-            </div>
+            <FormInputPembinaan form={form} setForm={setForm} />
           </div>
         </div>
 
         {/* Data Array (Hobi, Cita-cita, dll) */}
         <div className="form-section">
-          <h2 className="section-title">⭐ Data Tambahan</h2>
+          <div className="section-header">
+            <h2 className="section-title">⭐ Data Tambahan</h2>
+          </div>
           <div className="form-grid">
             {["hobi", "minat", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
               <div key={key} className="form-group">
@@ -564,7 +529,7 @@ function FormUpdateGenerus() {
                     {form[key].length > 1 && (
                       <button
                         type="button"
-                        className="btn btn-secondary btn-sm"
+                        className="remove-field-btn"
                         onClick={() => removeField(key, idx)}
                       >
                         ❌
@@ -593,7 +558,7 @@ function FormUpdateGenerus() {
           >
             {isSubmitting ? (
               <>
-                <div className="loading-spinner" style={{width: '20px', height: '20px', display: 'inline-block', marginRight: '10px'}}></div>
+                <div className="loading-spinner-small"></div>
                 Memperbarui...
               </>
             ) : (

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import "./LoginPage.css"; // ✅ Import CSS
+import "./LoginPage.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -29,48 +29,70 @@ export default function LoginPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="login-form">
-      <div>
-        <h2>Login</h2>
-        <p>🔒 Akses data hanya tersedia untuk pengguna terdaftar. Silahkan Login</p>
-      </div>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="login-header">
+          <div className="login-icon">🕌</div>
+          <h2 className="login-title">Login PPG Generus</h2>
+          <p className="login-subtitle">🔒 Akses data hanya tersedia untuk pengguna terdaftar</p>
+        </div>
 
-      {error && <p className="error">{error}</p>}
+        {error && <div className="error-message">{error}</div>}
 
-      <div>
-        <input
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-          type="text"
-          required
-          placeholder="Alamat email"
-          disabled={isLoading}
-          autoComplete="nope"
-        />
+        <div className="input-group">
+          <div className="input-field">
+            <span className="input-icon">👤</span>
+            <input
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              type="text"
+              required
+              placeholder="Alamat email atau username"
+              disabled={isLoading}
+              autoComplete="nope"
+              className="login-input"
+            />
+          </div>
 
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          type={showPassword ? "text" : "password"}
-          required
-          placeholder="Kata sandi"
+          <div className="input-field">
+            <span className="input-icon">🔒</span>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              type={showPassword ? "text" : "password"}
+              required
+              placeholder="Kata sandi"
+              disabled={isLoading}
+              className="login-input"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              disabled={isLoading}
+              className="password-toggle"
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
           disabled={isLoading}
-        />
-        
-        <button
-          type="button"
-          onClick={() => setShowPassword((prev) => !prev)}
-          disabled={isLoading}
+          className="login-button"
         >
-          {showPassword ? "🙈 Sembunyikan" : "👁️ Tampilkan"}
+          {/* {isLoading ? (
+            <span className="loading-spinner">⏳</span>
+          ) : (
+            "🚪 Masuk"
+          )} */}
+          {isLoading ? "Memproses..." : "🚪 Login"}
         </button>
-      </div>
 
-      <button type="submit" disabled={isLoading}>
-        <p>
-          {isLoading ? "Memproses..." : "Login"}
-        </p>
-      </button>
-    </form>
+        <div className="login-footer">
+          <p>📋 Sistem Management Generus PPG</p>
+        </div>
+      </form>
+    </div>
   );
 }

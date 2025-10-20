@@ -1,25 +1,56 @@
+/* WhatsAppButton.css - Tema Neo Brutalism */
+
 .whatsapp-button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25D366;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  bottom: 25px;
+  right: 25px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  border: 3px solid #075E54;
+  border-radius: 50px;
+  padding: 15px 20px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 6px 6px 0px #075E54;
   z-index: 1000;
-  transition: transform 0.2s;
 }
 
 .whatsapp-button:hover {
-  transform: scale(1.1);
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0px #075E54;
+}
+
+.whatsapp-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .whatsapp-icon {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) invert(1);
+}
+
+.whatsapp-text {
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .whatsapp-button {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 15px;
+  }
+  
+  .whatsapp-text {
+    display: none;
+  }
+  
+  .whatsapp-content {
+    gap: 0;
+  }
 }

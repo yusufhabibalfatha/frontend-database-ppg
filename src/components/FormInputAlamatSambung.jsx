@@ -40,14 +40,13 @@ const FormInputAlamatSambung = ({ form, setForm }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Jika desa berubah, kosongkan kelompok juga
     if (name === "desa") {
       setForm((prev) => ({
         ...prev,
         alamat_sambung: {
           ...prev.alamat_sambung,
           desa: value,
-          kelompok: "", // Reset kelompok
+          kelompok: "",
         },
       }));
     } else {
@@ -62,18 +61,20 @@ const FormInputAlamatSambung = ({ form, setForm }) => {
   };
 
   return (
-    <div>
-      <p>Isi Data Alamat Sambung</p>
-      <div>
+    <div className="alamat-sambung-group">
+      <div className="form-grid">
         {/* Select Desa */}
-        <div>
-          <label htmlFor="desa">Desa :</label>
+        <div className="form-group">
+          <label htmlFor="desa" className="form-label required">
+            Desa {!isAdmin && "🔒"}
+          </label>
           <select
             id="desa"
             name="desa"
             value={form.alamat_sambung.desa || ""}
             onChange={handleChange}
-            disabled={!isAdmin} // 🔒 Non-admin tidak bisa pilih
+            disabled={!isAdmin}
+            className="form-select"
           >
             <option value="">Pilih Desa</option>
             {desaList.map((desa) => (
@@ -85,14 +86,17 @@ const FormInputAlamatSambung = ({ form, setForm }) => {
         </div>
 
         {/* Select Kelompok */}
-        <div>
-          <label htmlFor="kelompok">Kelompok :</label>
+        <div className="form-group">
+          <label htmlFor="kelompok" className="form-label required">
+            Kelompok {!isAdmin && "🔒"}
+          </label>
           <select
             id="kelompok"
             name="kelompok"
             value={form.alamat_sambung.kelompok || ""}
             onChange={handleChange}
-            disabled={!isAdmin || !selectedDesa} // 🔒 Non-admin dan yang belum pilih desa tidak bisa pilih kelompok
+            disabled={!isAdmin || !selectedDesa}
+            className="form-select"
           >
             <option value="">Pilih Kelompok</option>
             {kelompokList.map((kelompok) => (
@@ -103,7 +107,6 @@ const FormInputAlamatSambung = ({ form, setForm }) => {
           </select>
         </div>
       </div>
-
     </div>
   );
 };

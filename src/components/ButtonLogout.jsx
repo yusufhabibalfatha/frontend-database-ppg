@@ -1,6 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import "./ButtonLogout.css"; // Import CSS
+import "./ButtonLogout.css";
 
 function ButtonLogout() {
   const { logout } = useAuth();

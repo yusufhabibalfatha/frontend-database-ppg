@@ -10,11 +10,14 @@ const WhatsAppButton = ({ phoneNumber }) => {
 
   return (
     <div className="whatsapp-button" onClick={handleClick}>
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
-        alt="WhatsApp"
-        className="whatsapp-icon"
-      />
+      <div className="whatsapp-content">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+          alt="WhatsApp"
+          className="whatsapp-icon"
+        />
+        <span className="whatsapp-text">Hubungi Kami</span>
+      </div>
     </div>
   );
 };

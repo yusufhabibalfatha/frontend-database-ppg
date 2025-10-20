@@ -1,24 +1,27 @@
-/* ButtonLogout.css */
+/* ButtonLogout.css - Tema Neo Brutalism */
+
 .logout-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 500;
+  background: var(--cream);
+  color: var(--dark-green);
+  border: 3px solid #2c3e2c;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 14px;
-  backdrop-filter: blur(10px);
+  text-decoration: none;
+  box-shadow: 4px 4px 0px #2c3e2c;
 }
 
 .logout-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: #2c3e2c;
+  color: var(--cream);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--dark-green);
 }
 
 .logout-btn:active {
-  transform: translateY(0);
+  transform: translate(0px, 0px);
+  box-shadow: 2px 2px 0px #2c3e2c;
 }

@@ -6,7 +6,7 @@ import FormInputAlamatSambung from "./FormInputAlamatSambung";
 import FormInputPembinaan from "./FormInputPembinaan";
 import FormInputPendidikan from "./FormInputPendidikan";
 import { useAuth } from "../context/AuthContext";
-import "./FormTambahGenerus.css"; // ✅ Import CSS
+import "./FormTambahGenerus.css";
 
 function FormTambahGenerus() {
   const { showNotification } = useContext(NotificationContext);
@@ -106,9 +106,6 @@ function FormTambahGenerus() {
       import.meta.env.VITE_API_URL
     }/db/generus/tambah?_=${new Date().getTime()}`;
 
-      console.log('data kirim , ', data)
-
-
     const token = localStorage.getItem("adminToken");
     try {
       const response = await axios.post(apiUrl, data, {
@@ -117,8 +114,7 @@ function FormTambahGenerus() {
         },
       });
       showNotification("✅ Data generus berhasil ditambahkan!");
-      console.log('data dari backend, ', response)
-      // navigate("/");
+      navigate("/");
     } catch (error) {
       showNotification("❌ Gagal menambahkan data generus.");
       console.error(error);
@@ -155,7 +151,9 @@ function FormTambahGenerus() {
       <form onSubmit={handleSubmit} className="form-container">
         {/* Data Diri */}
         <div className="form-section">
-          <h2 className="section-title">👤 Data Diri</h2>
+          <div className="section-header">
+            <h2 className="section-title">👤 Data Diri</h2>
+          </div>
           <div className="form-grid">
             <div className="form-group">
               <label htmlFor="nama_lengkap" className="form-label required">
@@ -305,7 +303,9 @@ function FormTambahGenerus() {
 
         {/* Data Alamat */}
         <div className="form-section">
-          <h2 className="section-title">🏠 Data Alamat</h2>
+          <div className="section-header">
+            <h2 className="section-title">🏠 Data Alamat</h2>
+          </div>
           <div className="nested-grid">
             {Object.keys(form.alamat).map((field) => (
               <div key={field} className="form-group">
@@ -327,7 +327,9 @@ function FormTambahGenerus() {
 
         {/* Alamat Sambung & No HP */}
         <div className="form-section">
-          <h2 className="section-title">📍 Alamat Sambung & Kontak</h2>
+          <div className="section-header">
+            <h2 className="section-title">📍 Alamat Sambung & Kontak</h2>
+          </div>
           <FormInputAlamatSambung form={form} setForm={setForm} />
           
           <div className="form-group">
@@ -350,7 +352,7 @@ function FormTambahGenerus() {
                 {form.no_hp.length > 1 && (
                   <button
                     type="button"
-                    className="btn btn-secondary btn-sm"
+                    className="remove-field-btn"
                     onClick={() => removeField("no_hp", idx)}
                   >
                     ❌
@@ -370,7 +372,9 @@ function FormTambahGenerus() {
 
         {/* Data Orang Tua */}
         <div className="form-section">
-          <h2 className="section-title">👨‍👩‍👧‍👦 Data Orang Tua</h2>
+          <div className="section-header">
+            <h2 className="section-title">👨‍👩‍👧‍👦 Data Orang Tua</h2>
+          </div>
           <div className="form-grid">
             {form.orangtua && Object.keys(form.orangtua).map((field) => (
               <div key={field} className="form-group">
@@ -393,7 +397,9 @@ function FormTambahGenerus() {
 
         {/* Pendidikan & Pembinaan */}
         <div className="form-section">
-          <h2 className="section-title">🎓 Pendidikan & Pembinaan</h2>
+          <div className="section-header">
+            <h2 className="section-title">🎓 Pendidikan & Pembinaan</h2>
+          </div>
           <div className="form-grid">
             <FormInputPendidikan form={form} setForm={setForm} />
             <div className="form-group">
@@ -416,7 +422,9 @@ function FormTambahGenerus() {
 
         {/* Data Array (Hobi, Cita-cita, dll) */}
         <div className="form-section">
-          <h2 className="section-title">⭐ Data Tambahan</h2>
+          <div className="section-header">
+            <h2 className="section-title">⭐ Data Tambahan</h2>
+          </div>
           <div className="form-grid">
             {["hobi", "minat", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
               <div key={key} className="form-group">
@@ -437,7 +445,7 @@ function FormTambahGenerus() {
                     {form[key].length > 1 && (
                       <button
                         type="button"
-                        className="btn btn-secondary btn-sm"
+                        className="remove-field-btn"
                         onClick={() => removeField(key, idx)}
                       >
                         ❌
@@ -466,7 +474,7 @@ function FormTambahGenerus() {
           >
             {isSubmitting ? (
               <>
-                <div className="loading-spinner" style={{width: '20px', height: '20px', display: 'inline-block', marginRight: '10px'}}></div>
+                <div className="loading-spinner-small"></div>
                 Menyimpan...
               </>
             ) : (

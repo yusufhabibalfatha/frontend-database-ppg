@@ -1,8 +1,8 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
 import ButtonLogout from "./components/ButtonLogout";
-import WhatsAppButton from "./components/WhatsAppButton"
+import WhatsAppButton from "./components/WhatsAppButton";
 import PrivateRoute from "./context/PrivateRoute";
-import "./Layout.css"; // ✅ Import CSS
+import "./Layout.css";
 
 function Layout() {
   const location = useLocation();
@@ -12,6 +12,10 @@ function Layout() {
       <nav className="layout-nav">
         <PrivateRoute>
           <div className="nav-content">
+            <div className="nav-brand">
+              <span className="nav-logo">🕌</span>
+              <span className="nav-title">PPG Generus</span>
+            </div>
             <div className="nav-links">
               <Link 
                 to="/" 
@@ -19,7 +23,6 @@ function Layout() {
               >
                 🏠 Home
               </Link>
-              <span className="nav-separator">|</span>
               <Link 
                 to="/tambah" 
                 className={`nav-link ${location.pathname === '/tambah' ? 'active' : ''}`}
@@ -33,8 +36,6 @@ function Layout() {
           </div>
         </PrivateRoute>
       </nav>
-      
-      <hr className="layout-divider" />
       
       <main className="layout-outlet">
         <Outlet />
