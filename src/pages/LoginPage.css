@@ -13,7 +13,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  /* padding: 20px; */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -206,8 +206,8 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .login-form {
-    padding: 30px 25px;
-    margin: 20px;
+    padding: 10px 12px;
+    /* margin: 5px; */
   }
   
   .login-title {

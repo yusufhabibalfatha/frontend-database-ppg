@@ -754,3 +754,13 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Efek klik */
+.clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clickable:hover {
+  transform: translate(-2px, -2px);
+}
