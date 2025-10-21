@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { NotificationContext } from "../context/NotificationContext";
 import { useAuth } from "../context/AuthContext";
+import { exportToExcel, exportStatisticsToExcel, formatGenerusForExport } from "../utils/exportToExcel";
 import "./PageHome.css";
 
 function PageHome() {
@@ -195,6 +196,35 @@ function PageHome() {
     return kelompokStats;
   };
 
+  // Fungsi untuk export data
+  const handleExportData = (data, exportType, filterName = '') => {
+    if (!data || data.length === 0) {
+      showNotification("❌ Tidak ada data untuk diexport");
+      return;
+    }
+
+    const formattedData = formatGenerusForExport(data);
+    const filename = `generus-${exportType}${filterName ? '-' + filterName.replace(/\s+/g, '-') : ''}`;
+    
+    const success = exportToExcel(formattedData, filename);
+    if (success) {
+      showNotification(`✅ Data berhasil diexport ke Excel`);
+    } else {
+      showNotification(`❌ Gagal mengexport data`);
+    }
+  };
+
+  const handleExportStatistics = (stats, kelompok = '') => {
+    const filename = `statistik${kelompok ? '-' + kelompok.replace(/\s+/g, '-') : ''}`;
+    
+    const success = exportStatisticsToExcel(stats, filename);
+    if (success) {
+      showNotification(`✅ Statistik berhasil diexport ke Excel`);
+    } else {
+      showNotification(`❌ Gagal mengexport statistik`);
+    }
+  };
+
   const statistics = calculateStatistics();
   const kelompokStats = calculateKelompokStats();
 
@@ -300,13 +330,29 @@ function PageHome() {
           
           <div className="user-info subscriber">
             <p>👥 Kelas Generus - {auth?.kelompok}</p>
+            <button 
+              className="export-btn"
+              onClick={() => handleExportData(filteredGenerus, 'kelompok', auth?.kelompok)}
+              title="Export data ke Excel"
+            >
+              📊 Export Excel
+            </button>
           </div>
         </div>
 
         {/* Statistics Section */}
         {filteredGenerus.length > 0 && (
           <div className="statistics-section">
-            <h2 className="statistics-title">📈 Statistik Generus - {auth?.kelompok}</h2>
+            <div className="statistics-header">
+              <h2 className="statistics-title">📈 Statistik Generus - {auth?.kelompok}</h2>
+              <button 
+                className="export-btn small"
+                onClick={() => handleExportStatistics(subscriberStats, auth?.kelompok)}
+                title="Export statistik ke Excel"
+              >
+                📈 Export Statistik
+              </button>
+            </div>
             
             <div className="statistics-grid">
               {/* Total Generus */}
@@ -318,6 +364,16 @@ function PageHome() {
                 <div className="stat-content">
                   <h3 className="stat-value">{subscriberStats.total}</h3>
                   <p className="stat-label">Total Generus</p>
+                  <button 
+                    className="export-mini-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleExportData(filteredGenerus, 'total', auth?.kelompok);
+                    }}
+                    title="Export semua data"
+                  >
+                    📥
+                  </button>
                 </div>
               </div>
 
@@ -336,6 +392,17 @@ function PageHome() {
                       >
                         <span className="stat-detail-label">{key}</span>
                         <span className="stat-detail-value">{value}</span>
+                        <button 
+                          className="export-mini-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const filtered = filteredGenerus.filter(item => item.jenjang_pembinaan === key);
+                            handleExportData(filtered, 'pembinaan', key);
+                          }}
+                          title={`Export data ${key}`}
+                        >
+                          📥
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -357,6 +424,21 @@ function PageHome() {
                       >
                         <span className="stat-detail-label">{key}</span>
                         <span className="stat-detail-value">{value}</span>
+                        <button 
+                          className="export-mini-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const categories = pendidikanCategories[key] || [key];
+                            const filtered = filteredGenerus.filter(item => {
+                              const pendidikan = cleanPendidikanData(item.jenjang_pendidikan);
+                              return categories.includes(pendidikan);
+                            });
+                            handleExportData(filtered, 'pendidikan', key);
+                          }}
+                          title={`Export data ${key}`}
+                        >
+                          📥
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -376,6 +458,17 @@ function PageHome() {
                     >
                       <span className="stat-detail-label">👦 Laki-laki</span>
                       <span className="stat-detail-value">{subscriberStats.gender['Laki-laki']}</span>
+                      <button 
+                        className="export-mini-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const filtered = filteredGenerus.filter(item => item.jenis_kelamin === 'Laki-laki');
+                          handleExportData(filtered, 'gender', 'Laki-laki');
+                        }}
+                        title="Export data Laki-laki"
+                      >
+                        📥
+                      </button>
                     </div>
                     <div 
                       className="stat-detail-row clickable"
@@ -383,6 +476,17 @@ function PageHome() {
                     >
                       <span className="stat-detail-label">👧 Perempuan</span>
                       <span className="stat-detail-value">{subscriberStats.gender['Perempuan']}</span>
+                      <button 
+                        className="export-mini-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const filtered = filteredGenerus.filter(item => item.jenis_kelamin === 'Perempuan');
+                          handleExportData(filtered, 'gender', 'Perempuan');
+                        }}
+                        title="Export data Perempuan"
+                      >
+                        📥
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -451,7 +555,15 @@ function PageHome() {
                   {filterType === 'gender' && `${selectedFilter === 'Laki-laki' ? '👦' : '👧'} ${selectedFilter}`}
                   {filterType === 'total' && `👥 Semua Generus`}
                 </h2>
-                <button className="modal-close" onClick={closeModal}>✕</button>
+                <div className="modal-actions">
+                  <button 
+                    className="export-btn small"
+                    onClick={() => handleExportData(filteredData, filterType, selectedFilter)}
+                  >
+                    📊 Export Data
+                  </button>
+                  <button className="modal-close" onClick={closeModal}>✕</button>
+                </div>
               </div>
               
               <div className="modal-body">
@@ -510,6 +622,13 @@ function PageHome() {
         
         <div className="user-info admin">
           <p>👨‍💼 Admin Panel - Overview Semua Kelompok</p>
+          <button 
+            className="export-btn"
+            onClick={() => handleExportData(generus, 'semua-data')}
+            title="Export semua data generus"
+          >
+            📊 Export Semua Data
+          </button>
         </div>
       </div>
 
@@ -523,6 +642,16 @@ function PageHome() {
           <div className="overview-content">
             <h3 className="overview-value">{generus.length}</h3>
             <p className="overview-label">Total Semua Generus</p>
+            <button 
+              className="export-mini-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleExportData(generus, 'total');
+              }}
+              title="Export semua data"
+            >
+              📥
+            </button>
           </div>
         </div>
         
@@ -588,7 +717,19 @@ function PageHome() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2 className="modal-title">📊 Detail Kelompok - {selectedKelompok}</h2>
-              <button className="modal-close" onClick={closeModal}>✕</button>
+              <div className="modal-actions">
+                <button 
+                  className="export-btn small"
+                  onClick={() => handleExportData(
+                    kelompokStats[selectedKelompok].generusList, 
+                    'kelompok', 
+                    selectedKelompok
+                  )}
+                >
+                  📊 Export Data
+                </button>
+                <button className="modal-close" onClick={closeModal}>✕</button>
+              </div>
             </div>
             
             <div className="modal-body">
@@ -604,6 +745,16 @@ function PageHome() {
                     <div className="stat-content">
                       <h3 className="stat-value">{kelompokStats[selectedKelompok].total}</h3>
                       <p className="stat-label">Total Generus</p>
+                      <button 
+                        className="export-mini-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleExportData(kelompokStats[selectedKelompok].generusList, 'total', selectedKelompok);
+                        }}
+                        title="Export semua data kelompok"
+                      >
+                        📥
+                      </button>
                     </div>
                   </div>
 
@@ -619,6 +770,17 @@ function PageHome() {
                         >
                           <span className="stat-detail-label">👦 Laki-laki</span>
                           <span className="stat-detail-value">{kelompokStats[selectedKelompok].gender['Laki-laki'] || 0}</span>
+                          <button 
+                            className="export-mini-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const filtered = kelompokStats[selectedKelompok].generusList.filter(item => item.jenis_kelamin === 'Laki-laki');
+                              handleExportData(filtered, 'gender', `Laki-laki-${selectedKelompok}`);
+                            }}
+                            title="Export data Laki-laki"
+                          >
+                            📥
+                          </button>
                         </div>
                         <div 
                           className="stat-detail-row clickable"
@@ -626,6 +788,17 @@ function PageHome() {
                         >
                           <span className="stat-detail-label">👧 Perempuan</span>
                           <span className="stat-detail-value">{kelompokStats[selectedKelompok].gender['Perempuan'] || 0}</span>
+                          <button 
+                            className="export-mini-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const filtered = kelompokStats[selectedKelompok].generusList.filter(item => item.jenis_kelamin === 'Perempuan');
+                              handleExportData(filtered, 'gender', `Perempuan-${selectedKelompok}`);
+                            }}
+                            title="Export data Perempuan"
+                          >
+                            📥
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -645,6 +818,17 @@ function PageHome() {
                           >
                             <span className="stat-detail-label">{key}</span>
                             <span className="stat-detail-value">{value}</span>
+                            <button 
+                              className="export-mini-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const filtered = kelompokStats[selectedKelompok].generusList.filter(item => item.jenjang_pembinaan === key);
+                                handleExportData(filtered, 'pembinaan', `${key}-${selectedKelompok}`);
+                              }}
+                              title={`Export data ${key}`}
+                            >
+                              📥
+                            </button>
                           </div>
                         ))}
                       </div>
@@ -665,6 +849,21 @@ function PageHome() {
                           >
                             <span className="stat-detail-label">{key}</span>
                             <span className="stat-detail-value">{value}</span>
+                            <button 
+                              className="export-mini-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const categories = pendidikanCategories[key] || [key];
+                                const filtered = kelompokStats[selectedKelompok].generusList.filter(item => {
+                                  const pendidikan = cleanPendidikanData(item.jenjang_pendidikan);
+                                  return categories.includes(pendidikan);
+                                });
+                                handleExportData(filtered, 'pendidikan', `${key}-${selectedKelompok}`);
+                              }}
+                              title={`Export data ${key}`}
+                            >
+                              📥
+                            </button>
                           </div>
                         ))}
                       </div>
@@ -726,7 +925,15 @@ function PageHome() {
                 {filterType === 'gender' && `${selectedFilter === 'Laki-laki' ? '👦' : '👧'} ${selectedFilter}`}
                 {filterType === 'total' && `👥 Semua Generus`}
               </h2>
-              <button className="modal-close" onClick={closeModal}>✕</button>
+              <div className="modal-actions">
+                <button 
+                  className="export-btn small"
+                  onClick={() => handleExportData(filteredData, filterType, selectedFilter)}
+                >
+                  📊 Export Data
+                </button>
+                <button className="modal-close" onClick={closeModal}>✕</button>
+              </div>
             </div>
             
             <div className="modal-body">

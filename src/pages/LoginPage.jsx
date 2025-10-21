@@ -90,7 +90,7 @@ export default function LoginPage() {
         </button>
 
         <div className="login-footer">
-          <p>📋 Sistem Management Generus PPG</p>
+          <p>📋 Sistem Management Generus PPG V1</p>
         </div>
       </form>
     </div>
