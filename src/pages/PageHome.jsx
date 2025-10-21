@@ -216,6 +216,8 @@ function PageHome() {
 
   const handleExportStatistics = (stats, kelompok = '') => {
     const filename = `statistik${kelompok ? '-' + kelompok.replace(/\s+/g, '-') : ''}`;
+
+    console.log('stats ', stats)
     
     const success = exportStatisticsToExcel(stats, filename);
     if (success) {
