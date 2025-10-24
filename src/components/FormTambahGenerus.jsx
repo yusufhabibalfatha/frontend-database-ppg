@@ -116,7 +116,10 @@ function FormTambahGenerus() {
       showNotification("✅ Data generus berhasil ditambahkan!");
       navigate("/");
     } catch (error) {
-      showNotification("❌ Gagal menambahkan data generus.");
+      showNotification(
+        "❌ Gagal menambahkan data generus.",
+        error.response.data.message
+      );
       console.error(error);
     }
   };
@@ -138,7 +141,7 @@ function FormTambahGenerus() {
   }
 
   const formatLabel = (text) => {
-    return text.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    return text.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
   };
 
   return (
@@ -147,7 +150,7 @@ function FormTambahGenerus() {
         <h1 className="form-title">➕ Tambah Generus Baru</h1>
         <p className="form-subtitle">Isi data lengkap generus dengan benar</p>
       </div>
-      
+
       <form onSubmit={handleSubmit} className="form-container">
         {/* Data Diri */}
         <div className="form-section">
@@ -331,7 +334,7 @@ function FormTambahGenerus() {
             <h2 className="section-title">📍 Alamat Sambung & Kontak</h2>
           </div>
           <FormInputAlamatSambung form={form} setForm={setForm} />
-          
+
           <div className="form-group">
             <label className="form-label required">📱 Nomor HP</label>
             {form.no_hp.map((item, idx) => (
@@ -376,22 +379,23 @@ function FormTambahGenerus() {
             <h2 className="section-title">👨‍👩‍👧‍👦 Data Orang Tua</h2>
           </div>
           <div className="form-grid">
-            {form.orangtua && Object.keys(form.orangtua).map((field) => (
-              <div key={field} className="form-group">
-                <label htmlFor={field} className="form-label required">
-                  {formatLabel(field)}
-                </label>
-                <input
-                  id={field}
-                  name={field}
-                  className="form-input"
-                  placeholder={`Masukkan ${formatLabel(field).toLowerCase()}`}
-                  value={form.orangtua[field]}
-                  onChange={(e) => handleNestedChange(e, "orangtua")}
-                  required
-                />
-              </div>
-            ))}
+            {form.orangtua &&
+              Object.keys(form.orangtua).map((field) => (
+                <div key={field} className="form-group">
+                  <label htmlFor={field} className="form-label required">
+                    {formatLabel(field)}
+                  </label>
+                  <input
+                    id={field}
+                    name={field}
+                    className="form-input"
+                    placeholder={`Masukkan ${formatLabel(field).toLowerCase()}`}
+                    value={form.orangtua[field]}
+                    onChange={(e) => handleNestedChange(e, "orangtua")}
+                    required
+                  />
+                </div>
+              ))}
           </div>
         </div>
 
@@ -426,52 +430,52 @@ function FormTambahGenerus() {
             <h2 className="section-title">⭐ Data Tambahan</h2>
           </div>
           <div className="form-grid">
-            {["hobi", "minat", "cita_cita", "prestasi", "kejuaraan"].map((key) => (
-              <div key={key} className="form-group">
-                <label className="form-label required">
-                  {formatLabel(key)}
-                </label>
-                {form[key].map((item, idx) => (
-                  <div key={idx} className="array-item">
-                    <input
-                      value={item}
-                      className="form-input array-input"
-                      placeholder={`Masukkan ${formatLabel(key).toLowerCase()}`}
-                      onChange={(e) =>
-                        handleArrayChange(idx, key, e.target.value)
-                      }
-                      required
-                    />
-                    {form[key].length > 1 && (
-                      <button
-                        type="button"
-                        className="remove-field-btn"
-                        onClick={() => removeField(key, idx)}
-                      >
-                        ❌
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  className="add-field-btn"
-                  onClick={() => addField(key)}
-                >
-                  ➕ Tambah {formatLabel(key)}
-                </button>
-              </div>
-            ))}
+            {["hobi", "minat", "cita_cita", "prestasi", "kejuaraan"].map(
+              (key) => (
+                <div key={key} className="form-group">
+                  <label className="form-label required">
+                    {formatLabel(key)}
+                  </label>
+                  {form[key].map((item, idx) => (
+                    <div key={idx} className="array-item">
+                      <input
+                        value={item}
+                        className="form-input array-input"
+                        placeholder={`Masukkan ${formatLabel(
+                          key
+                        ).toLowerCase()}`}
+                        onChange={(e) =>
+                          handleArrayChange(idx, key, e.target.value)
+                        }
+                        required
+                      />
+                      {form[key].length > 1 && (
+                        <button
+                          type="button"
+                          className="remove-field-btn"
+                          onClick={() => removeField(key, idx)}
+                        >
+                          ❌
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    className="add-field-btn"
+                    onClick={() => addField(key)}
+                  >
+                    ➕ Tambah {formatLabel(key)}
+                  </button>
+                </div>
+              )
+            )}
           </div>
         </div>
 
         {/* Submit Button */}
         <div className="submit-section">
-          <button
-            type="submit"
-            className="submit-btn"
-            disabled={isSubmitting}
-          >
+          <button type="submit" className="submit-btn" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <div className="loading-spinner-small"></div>
