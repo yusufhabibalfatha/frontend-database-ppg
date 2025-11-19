@@ -216,37 +216,39 @@ function PageHome() {
 
   // Fungsi untuk export data
   const handleExportData = (data, exportType, filterName = "") => {
-    if (!data || data.length === 0) {
-      showNotification("❌ Tidak ada data untuk diexport");
-      return;
-    }
+    // if (!data || data.length === 0) {
+    //   showNotification("❌ Tidak ada data untuk diexport");
+    //   return;
+    // }
 
-    const formattedData = formatGenerusForExport(data);
-    const filename = `generus-${exportType}${
-      filterName ? "-" + filterName.replace(/\s+/g, "-") : ""
-    }`;
+    // const formattedData = formatGenerusForExport(data);
+    // const filename = `generus-${exportType}${
+    //   filterName ? "-" + filterName.replace(/\s+/g, "-") : ""
+    // }`;
 
-    const success = exportToExcel(formattedData, filename);
-    if (success) {
-      showNotification(`✅ Data berhasil diexport ke Excel`);
-    } else {
-      showNotification(`❌ Gagal mengexport data`);
-    }
+    // const success = exportToExcel(formattedData, filename);
+    // if (success) {
+    //   showNotification(`✅ Data berhasil diexport ke Excel`);
+    // } else {
+    //   showNotification(`❌ Gagal mengexport data`);
+    // }
+    alert("Maaf fitur ini masih dalam pengembangan🙏.");
   };
 
   const handleExportStatistics = (stats, kelompok = "") => {
-    const filename = `statistik${
-      kelompok ? "-" + kelompok.replace(/\s+/g, "-") : ""
-    }`;
+    // const filename = `statistik${
+    //   kelompok ? "-" + kelompok.replace(/\s+/g, "-") : ""
+    // }`;
 
-    console.log("stats ", stats);
+    // console.log("stats ", stats);
 
-    const success = exportStatisticsToExcel(stats, filename);
-    if (success) {
-      showNotification(`✅ Statistik berhasil diexport ke Excel`);
-    } else {
-      showNotification(`❌ Gagal mengexport statistik`);
-    }
+    // const success = exportStatisticsToExcel(stats, filename);
+    // if (success) {
+    //   showNotification(`✅ Statistik berhasil diexport ke Excel`);
+    // } else {
+    //   showNotification(`❌ Gagal mengexport statistik`);
+    // }
+    alert("Maaf fitur ini masih dalam pengembangan🙏.");
   };
 
   const statistics = calculateStatistics();

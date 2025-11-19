@@ -16,6 +16,7 @@ const FormInputAlamatSambung = ({ form, setForm }) => {
       "Markoni",
       "Amal",
       "Bunyu",
+      "Amin Manshurin",
     ],
     Barat: [
       "Simpang 3",
